@@ -1,6 +1,6 @@
 {
-    "name": "express-HelloWorld",
-    "description": "Hello World Node Express web application",
+    "name": "collection-manager",
+    "description": "Collection Manager node express website",
     "version": "0.0.1",
     "private": true,
     "dependencies": {
