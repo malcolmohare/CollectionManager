@@ -6,8 +6,8 @@
             "Properties": {
                 "AttributeDefinitions": [
                     {
-                        "AttributeName": "id",
-                        "AttributeType": "N"
+                        "AttributeName": "username",
+                        "AttributeType": "S"
                     },
                     {
                         "AttributeName": "email",
@@ -24,7 +24,7 @@
 			    }
 			],
 			"Projection" : {
-			    "ProjectionType" : "KEYS_ONLY"
+			    "ProjectionType" : "ALL"
 			},
 			"ProvisionedThroughput" : {
 			    "ReadCapacityUnits" : 5,
@@ -34,7 +34,7 @@
 		],
                 "KeySchema": [
                     {
-                        "AttributeName": "id",
+                        "AttributeName": "username",
                         "KeyType": "HASH"
                     }
                 ],

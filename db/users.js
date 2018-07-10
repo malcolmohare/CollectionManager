@@ -13,12 +13,12 @@ var table = "cmUsers";
 var emailIndex = "cmUsersEmailGsi";
 
 
-var findById = function(id, cb) {
+exports.findByUsername = function(username, cb) {
   process.nextTick(function() {
     var params = {
       TableName : table,
       Key : {
-        "id" : id
+        "username" : username
       }
     };
     docClient.get(params, function(err, data) {
@@ -29,26 +29,39 @@ var findById = function(id, cb) {
       }
     });
   });
-}
+};
 
-exports.findById = findById;
-exports.findByUsername = function(username, cb) {
+exports.findByEmail = function(email, cb) {
   process.nextTick(function() {
     var params = {
       TableName : table,
       IndexName : emailIndex,
-      KeyConditionExpression : "email = :username",
+      KeyConditionExpression : "email = :email",
       ExpressionAttributeValues : {
-        ":username" : username
+        ":email" : email
       }
     };
     docClient.query(params, function(err, data) {
       if (data != null) {
-        findById(data.Items[0].id, cb);
+        cb(null, data.Items[0]);
       } else {
-        cb(new Error('User' + username + ' does not exist: ' + err));
+        cb(new Error('User with email' + email + ' does not exist: ' + err));
       }
     });
   });
-}
+};
+
+exports.addUser = function(userdata, cb) {
+    var params = {
+      TableName : table,
+      Item : {
+        "username" : userdata.name,
+        "email" : userdata.email,
+        "password" : userdata.password
+      }
+    };
+    docClient.put(params, function(err, data) {
+      cb(err, data);
+    });
+};
 

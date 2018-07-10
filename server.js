@@ -18,11 +18,11 @@ passport.use(new Strategy(
 ));
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user.id);
+  cb(null, user.username);
 });
 
-passport.deserializeUser(function(id, cb) {
-  db.users.findById(id, function (err, user) {
+passport.deserializeUser(function(username, cb) {
+  db.users.findByUsername(username, function (err, user) {
     if (err) { return cb(err); }
     cb(null, user);
   });
