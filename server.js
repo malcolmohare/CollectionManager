@@ -69,5 +69,39 @@ app.get('/profile',
     res.render('profile', { user: req.user });
 });
 
+app.get('/register',
+  function(req, res){
+    res.render('register', {
+      data: {},
+      errors: {}
+    });
+  });
+
+app.post('/register',
+  function(req, res){
+    //var user = ?;  // get user post data
+    //db.users.addUser(user, function(err) {
+    //  if (err != null) {
+
+    //  } else {
+
+   //   }
+   // });
+    res.render('register', {
+      data: req.body,
+      errors: {
+        username: {
+          msg: 'username is required' 
+        },
+        email: {
+          msg: 'email is required'
+        },
+        password: {
+          msg: 'password is required'
+        }
+      }
+    });
+  });
+
 app.listen(port);
 module.exports = app;

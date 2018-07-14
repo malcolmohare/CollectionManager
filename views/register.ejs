@@ -1,0 +1,39 @@
+<div class="form-header">
+  <% if (Object.keys(errors).length === 0) { %>
+    <h2>Register</h2>
+  <% } else { %>
+    <h2 class="errors-heading">Oops, please correct the following:</h2>
+    <ul class="errors-list">
+      <% Object.values(errors).forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+</div>
+
+<form method="post" action="/register" novalidate>
+  <div>
+    <label for="username">Username</label>
+    <input class="input" id="username" name="username" type="text" value="<%= data.username %>" />
+    <% if (errors.username) { %>
+      <div class="error"> <%= errors.username.msg %></div>
+    <% } %>
+  </div>
+  <div>
+    <label for="email">E-Mail</label>
+    <input class="input" id="email" name="email" type="email" value="<%= data.email %>" />
+    <% if (errors.email) { %>
+      <div class="error"><%= errors.email.msg %></div>
+    <% } %>
+  </div>
+  <div>
+    <label for="password">Password</label>
+    <input class="input" id="password" name="password" type="text" value="<%= data.password %>" />
+    <% if (errors.password) { %>
+      <div class="error"><%= errors.password.msg %></div>
+    <% } %>
+  </div>
+  <div class="form-actions">
+    <button class="btn" type="submit">Register</button>
+  </div>
+</form>
