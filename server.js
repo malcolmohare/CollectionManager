@@ -3,6 +3,14 @@ const passport = require('passport');
 const session = require('express-session');
 const Strategy = require('passport-local');
 const db = require('./db');
+const validator = require('express-validator');
+
+const middleware = [
+  validator()
+];
+
+const { check, validationResult } = require('express-validator/check');
+const { matchedData } = require('express-validator/filter');
 
 var port = process.env.PORT || 3000;
 
@@ -39,6 +47,7 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(middleware);
 
 // Define routes.
 app.get('/',
@@ -77,7 +86,21 @@ app.get('/register',
     });
   });
 
-app.post('/register',
+app.post('/register', [
+    check('username')
+      .isLength({min:1, max:32})
+      .withMessage('Username is required')
+      .trim(),
+    check('email')
+      .isEmail()
+      .withMessage('Email is required')
+      .trim()
+      .normalizeEmail(),
+    check('password')
+      .isLength({min:1, max:16})
+      .withMessage('Password is required')
+      .trim()
+  ],
   function(req, res){
     //var user = ?;  // get user post data
     //db.users.addUser(user, function(err) {
@@ -87,20 +110,15 @@ app.post('/register',
 
    //   }
    // });
+    const errors = validationResult(req);
     res.render('register', {
       data: req.body,
-      errors: {
-        username: {
-          msg: 'username is required' 
-        },
-        email: {
-          msg: 'email is required'
-        },
-        password: {
-          msg: 'password is required'
-        }
-      }
+      errors: errors.mapped()
     });
+
+   const data = matchedData(req);
+   console.log('Sanitized:', data);
+
   });
 
 app.listen(port);
