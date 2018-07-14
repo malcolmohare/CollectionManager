@@ -55,7 +55,7 @@ exports.addUser = function(userdata, cb) {
     var params = {
       TableName : table,
       Item : {
-        "username" : userdata.name,
+        "username" : userdata.username,
         "email" : userdata.email,
         "password" : userdata.password
       }

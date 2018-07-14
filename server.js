@@ -124,8 +124,18 @@ app.post('/register', [
     const data = matchedData(req);
     console.log('Sanitized:', data);
 
-    req.flash('success', 'Thanks for registering!');
-    res.redirect('/');
+    db.users.addUser(data, function(err) {
+      if (err) {
+        res.render('register', {
+          data: data,
+          errors: { registration: { msg: err.message }}
+        });
+      } else {
+        req.flash('success', 'Thanks for registering!');
+        res.redirect('/');
+      }
+    });
+
   });
 
 app.listen(port);
