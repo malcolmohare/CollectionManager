@@ -1,3 +1,7 @@
+<% if (messages.success) { %>
+  <div class="flash flash-success"><%= messages.success %></div>
+<% } %>
+
 <% if (!user) { %>
     <p>Welcome! Please <a href="/login">log in</a>.</p>
 <% } else { %>

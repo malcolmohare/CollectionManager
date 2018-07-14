@@ -4,9 +4,13 @@ const session = require('express-session');
 const Strategy = require('passport-local');
 const db = require('./db');
 const validator = require('express-validator');
+const cookieParser = require('cookie-parser');
+const flash = require('express-flash');
 
 const middleware = [
-  validator()
+  validator(),
+  cookieParser(),
+  flash()
 ];
 
 const { check, validationResult } = require('express-validator/check');
@@ -42,7 +46,6 @@ var app = express();
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(require('morgan')('combined'));
-app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
@@ -111,14 +114,18 @@ app.post('/register', [
    //   }
    // });
     const errors = validationResult(req);
-    res.render('register', {
-      data: req.body,
-      errors: errors.mapped()
-    });
+    if (!errors.isEmpty()) {
+      res.render('register', {
+        data: req.body,
+        errors: errors.mapped()
+      });
+    }
 
-   const data = matchedData(req);
-   console.log('Sanitized:', data);
+    const data = matchedData(req);
+    console.log('Sanitized:', data);
 
+    req.flash('success', 'Thanks for registering!');
+    res.redirect('/');
   });
 
 app.listen(port);
