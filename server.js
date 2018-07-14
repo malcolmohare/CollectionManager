@@ -6,6 +6,7 @@ const db = require('./db');
 const validator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const flash = require('express-flash');
+const bcrypt = require('bcrypt');
 
 const middleware = [
   validator(),
@@ -23,8 +24,13 @@ passport.use(new Strategy(
     db.users.findByUsername(username, function(err, user) {
       if (err) { return cb(err); }
       if (!user) { return cb(null, false); }
-      if (user.password != password) { return cb(null, false); }
-      return cb(null, user);
+      bcrypt.compare(password, user.password, function(err, res) {
+        if (res) {
+          return cb(null, user);
+        } else {
+          return cb(null, false);
+        }
+      });
     });
   }
 ));
@@ -122,6 +128,8 @@ app.post('/register', [
     }
 
     const data = matchedData(req);
+    let hash = bcrypt.hashSync(data.password, 10);
+    data.password = hash;
     console.log('Sanitized:', data);
 
     db.users.addUser(data, function(err) {
