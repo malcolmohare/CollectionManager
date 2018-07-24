@@ -129,11 +129,13 @@ app.post('/register', [
 
     const data = matchedData(req);
     let hash = bcrypt.hashSync(data.password, 10);
+    
     data.password = hash;
     console.log('Sanitized:', data);
 
     db.users.addUser(data, function(err) {
       if (err) {
+        data.password = "";
         res.render('register', {
           data: data,
           errors: { registration: { msg: err.message }}
