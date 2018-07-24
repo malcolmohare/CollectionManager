@@ -9,7 +9,7 @@ AWS.config.loadFromPath('./config/config.json');
 AWS.config.logger = console;
 
 var docClient = new AWS.DynamoDB.DocumentClient();
-var table = "cmUsers";
+var table = "cmUserLogin";
 var emailIndex = "cmUsersEmailGsi";
 
 
