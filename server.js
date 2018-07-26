@@ -87,6 +87,49 @@ app.get('/profile',
     res.render('profile', { user: req.user });
 });
 
+app.get('/collections',
+  function(req, res) {
+    res.render('collections', {
+      data: {},
+      errors: {}
+    }); 
+  });
+
+app.post('/collection-create', [
+  check('collectionType')
+    .isLength({min:1})
+    .withMessage('collection type is required')
+    .trim(),
+  check('collectionName')
+    .isLength({min:1})
+    .withMessage('collection name is required')
+    .trim()
+  ],
+  function(req, res) {
+    const errors = validationResult(req);
+    const data = matchedData(req);
+    console.log('errors:' + JSON.stringify(errors));
+    console.log('data:' + JSON.stringify(data));
+    errors.operation = "create";
+    if(!errors.isEmpty()) {
+      res.render('collections', {
+        data: data,
+        errors: errors
+      });
+    }
+    db.collections.createCollection(data, function(err, result) {
+      if (err != null) {
+        res.render('/collections',
+          {
+            data: data,
+            errors: { create : { msg : err.message }}
+          });
+      } else {
+        res.redirect('/collections/' + data.collectionType + '/' + data.collectionName);
+      }
+    });
+  });
+
 app.get('/register',
   function(req, res){
     res.render('register', {
@@ -111,14 +154,6 @@ app.post('/register', [
       .trim()
   ],
   function(req, res){
-    //var user = ?;  // get user post data
-    //db.users.addUser(user, function(err) {
-    //  if (err != null) {
-
-    //  } else {
-
-   //   }
-   // });
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       res.render('register', {
