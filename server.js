@@ -95,6 +95,24 @@ app.get('/collections',
     }); 
   });
 
+app.get('/collections/:collectionType',
+  function(req, res) {
+    res.render('collectiontype', {
+      data:  {},
+      errors: {}
+    });
+  });
+
+app.get('/collections/:collectionType/:collectionName',
+  function(req, res) {
+    res.render('collection', {
+      data: {},
+      errors: {}
+    });
+  });
+
+
+
 app.post('/collection-create', [
   check('collectionType')
     .isLength({min:1})
@@ -108,8 +126,6 @@ app.post('/collection-create', [
   function(req, res) {
     const errors = validationResult(req);
     const data = matchedData(req);
-    console.log('errors:' + JSON.stringify(errors));
-    console.log('data:' + JSON.stringify(data));
     errors.operation = "create";
     if(!errors.isEmpty()) {
       res.render('collections', {
