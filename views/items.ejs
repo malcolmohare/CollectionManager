@@ -1,0 +1,34 @@
+<div class="form-header">
+  <% if (Object.keys(errors).length === 0) { %>
+    <h2>Items</h2>
+  <% } else { %>
+    <h2 class="errors-heading">Oops, please correct the following:</h2>
+    <ul class="errors-list">
+      <% Object.values(errors).forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+</div>
+
+<h3>Create</h3>
+<form action="/item-create" method="post">
+  <div>
+  <label>Item:</label>
+  <input type="text" name="itemName"/><br />
+  </div>
+  <div>
+  <input type="submit" value="Submit"/>
+  </div>
+</form>
+
+<h3>Search</h3>
+<form action="/item-search" method="post">
+  <div>
+  <label>Item:</label>
+  <input type="text" name="itemName" /><br />
+  </div>
+  <div>
+  <input type="submit" value="Search" />
+  </div>
+</form>

@@ -7,6 +7,7 @@ const validator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const flash = require('express-flash');
 const bcrypt = require('bcrypt');
+const uuid = require('uuid/v4');
 
 const middleware = [
   validator(),
@@ -85,7 +86,7 @@ app.get('/profile',
   require('connect-ensure-login').ensureLoggedIn(),
   function(req, res){
     res.render('profile', { user: req.user });
-});
+  });
 
 app.get('/collections',
   function(req, res) {
@@ -111,7 +112,22 @@ app.get('/collections/:collectionType/:collectionName',
     });
   });
 
+app.get('/items',
+  function(req, res) {
+    res.render('items', {
+      data: {},
+      errors: {}
+    });
+  });
 
+
+app.get('/items/:itemId',
+  function(req, res) {
+    res.render('item', {
+      data: {},
+      errors: {}
+    });
+  });
 
 app.post('/collection-create', [
   check('collectionType')
@@ -144,6 +160,55 @@ app.post('/collection-create', [
         res.redirect('/collections/' + data.collectionType + '/' + data.collectionName);
       }
     });
+  });
+
+
+app.post('/item-create', [
+  check('itemName')
+    .isLength({min:1})
+    .withMessage('item  name is required')
+    .trim()
+  ],
+  function(req, res) {
+    const errors = validationResult(req);
+    const data = matchedData(req);
+    errors.operation = "create";
+    if(!errors.isEmpty()) {
+      res.render('items', {
+        data: data,
+        errors: errors
+      });
+    }
+    data.itemId = uuid();
+    db.items.createItem(data, function(err, result) {
+      if (err != null) {
+        res.render('items',
+          {
+            data: data,
+            errors: { create : { msg : err.message }}
+          });
+      } else {
+        db.elasticsearch.putItem(data, function(err, result) {
+          res.redirect('/items/' + data.itemId);
+        });
+      }
+    });
+  });
+
+app.post('/item-search', [
+  check('itemName')
+    .isLength({min:1})
+    .withMessage('item  name is required')
+    .trim()
+  ],
+  function(req, res) {
+    const data = matchedData(req);
+    db.elasticsearch.searchItem(data.itemName, function(err, result) {
+      res.render('item-search-result',
+        { data: result,
+          errors : {} }
+      );
+    }); 
   });
 
 app.get('/register',
