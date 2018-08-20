@@ -57,3 +57,49 @@ exports.getCollection = function(collectionType, collectionName, cb) {
     });
   };
 
+exports.addItemToCollection = function(collectionType, collectionName, itemId, cb) {
+  var params = {
+    TableName : collectionTable,
+    Key : {
+      "collection-type" : collectionType,
+      "collection-name" : collectionName
+    },
+    UpdateExpression : "ADD collectionItems  :itemId",
+    ExpressionAttributeValues : { ":itemId" : docClient.createSet([itemId]) } 
+  };
+  docClient.update(params, function(err, data) {
+    if (err != null) {
+      console.log(err);
+    }
+    if (data != null) {
+      console.log(data);
+      cb(null, data);
+    } else {
+      cb(new Error('Error updating collectionType ' + collectionType + ' collectionName ' + collectionName + ': ' + err));
+    }
+  });
+}
+
+exports.removeItemFromCollection = function(collectionType, collectionName, itemId, cb) {
+  var params = {
+    TableName : collectionTable,
+    Key : {
+      "collection-type" : collectionType,
+      "collection-name" : collectionName
+    },
+    UpdateExpression : "DELETE collectionItems  :itemId",
+    ExpressionAttributeValues : { ":itemId" : docClient.createSet([itemId]) }
+  };
+  docClient.update(params, function(err, data) {
+    if (err != null) {
+      console.log(err);
+    }
+    if (data != null) {
+      console.log(data);
+      cb(null, data);
+    } else {
+      cb(new Error('Error updating collectionType ' + collectionType + ' collectionName ' + collectionName + ': ' + err));
+    }
+  });
+}
+
