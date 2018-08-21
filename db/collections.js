@@ -68,11 +68,7 @@ exports.addItemToCollection = function(collectionType, collectionName, itemId, c
     ExpressionAttributeValues : { ":itemId" : docClient.createSet([itemId]) } 
   };
   docClient.update(params, function(err, data) {
-    if (err != null) {
-      console.log(err);
-    }
     if (data != null) {
-      console.log(data);
       cb(null, data);
     } else {
       cb(new Error('Error updating collectionType ' + collectionType + ' collectionName ' + collectionName + ': ' + err));
@@ -91,11 +87,7 @@ exports.removeItemFromCollection = function(collectionType, collectionName, item
     ExpressionAttributeValues : { ":itemId" : docClient.createSet([itemId]) }
   };
   docClient.update(params, function(err, data) {
-    if (err != null) {
-      console.log(err);
-    }
     if (data != null) {
-      console.log(data);
       cb(null, data);
     } else {
       cb(new Error('Error updating collectionType ' + collectionType + ' collectionName ' + collectionName + ': ' + err));
