@@ -48,3 +48,42 @@ exports.searchItem = function(searchString, cb) {
     }
   });
 };
+
+exports.putCollection = function(collection, cb) {
+  client.index({
+    index: 'items',
+    id : collection.collectionName,
+    type : 'collection',
+    body : {
+      'collectionType' : collection.collectionType,
+      'collectionName' : collection.collectionName
+    }
+  }, function(err, resp, status) {
+    console.log(resp);
+    cb(err, resp);
+  });
+};
+
+exports.searchCollections = function(searchString, cb) {
+  client.search({
+    index: 'items',
+    type: 'collection',
+    body: {
+      query: {
+        multi_match: { fields: ["collectionName", "collectionType"], "query": searchString }
+      }
+    }
+  }, function(err, resp, status) {
+    if (err) {
+      console.log(err);
+      cb(err, null);
+    } else {
+      console.log("--- Response ---");
+      console.log(resp);
+      cb(null, resp.hits);
+      resp.hits.hits.forEach(function(hit) {
+        console.log(hit);
+      });
+    }
+  });
+};
