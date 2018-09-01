@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const flash = require('express-flash');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid/v4');
+const routes = require('./routes');
 
 const middleware = [
   validator(),
@@ -59,23 +60,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(middleware);
 
-// Define routes.
-app.get('/',
-  function(req, res) {
-    res.render('home', { user: req.user });
-  });
+// Attach routes.
+app.use('/', routes);
 
-app.get('/login',
-  function(req, res){
-    res.render('login');
-  });
-  
-app.post('/login', 
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
-  
 app.get('/logout',
   function(req, res){
     req.logout();
