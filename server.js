@@ -63,12 +63,6 @@ app.use(middleware);
 // Attach routes.
 app.use('/', routes);
 
-app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
-  function(req, res){
-    res.render('profile', { user: req.user });
-  });
-
 app.get('/collections',
   function(req, res) {
     res.render('collections', {
