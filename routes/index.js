@@ -2,6 +2,7 @@
 
 const routes = require('express').Router();
 const login = require('./login');
+const logout = require('./logout');
 
 routes.get('/',
   function(req, res) {
@@ -9,6 +10,7 @@ routes.get('/',
   });
 
 routes.use('/', login);
+routes.use('/', logout);
 
 module.exports = routes;
 
