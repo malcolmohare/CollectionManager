@@ -63,30 +63,6 @@ app.use(middleware);
 // Attach routes.
 app.use('/', routes);
 
-app.get('/collections',
-  function(req, res) {
-    res.render('collections', {
-      data: {},
-      errors: {}
-    }); 
-  });
-
-app.get('/collections/:collectionType',
-  function(req, res) {
-    res.render('collectiontype', {
-      data:  {},
-      errors: {}
-    });
-  });
-
-app.get('/collections/:collectionType/:collectionName',
-  function(req, res) {
-    res.render('collection', {
-      data: {},
-      errors: {}
-    });
-  });
-
 app.get('/items',
   function(req, res) {
     res.render('items', {
@@ -103,40 +79,6 @@ app.get('/items/:itemId',
       errors: {}
     });
   });
-
-app.post('/collection-create', [
-  check('collectionType')
-    .isLength({min:1})
-    .withMessage('collection type is required')
-    .trim(),
-  check('collectionName')
-    .isLength({min:1})
-    .withMessage('collection name is required')
-    .trim()
-  ],
-  function(req, res) {
-    const errors = validationResult(req);
-    const data = matchedData(req);
-    errors.operation = "create";
-    if(!errors.isEmpty()) {
-      res.render('collections', {
-        data: data,
-        errors: errors
-      });
-    }
-    db.collections.createCollection(data, function(err, result) {
-      if (err != null) {
-        res.render('/collections',
-          {
-            data: data,
-            errors: { create : { msg : err.message }}
-          });
-      } else {
-        res.redirect('/collections/' + data.collectionType + '/' + data.collectionName);
-      }
-    });
-  });
-
 
 app.post('/item-create', [
   check('itemName')
