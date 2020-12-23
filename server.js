@@ -128,58 +128,5 @@ app.post('/item-search', [
     }); 
   });
 
-app.get('/register',
-  function(req, res){
-    res.render('register', {
-      data: {},
-      errors: {}
-    });
-  });
-
-app.post('/register', [
-    check('username')
-      .isLength({min:1, max:32})
-      .withMessage('Username is required')
-      .trim(),
-    check('email')
-      .isEmail()
-      .withMessage('Email is required')
-      .trim()
-      .normalizeEmail(),
-    check('password')
-      .isLength({min:1, max:16})
-      .withMessage('Password is required')
-      .trim()
-  ],
-  function(req, res){
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      res.render('register', {
-        data: req.body,
-        errors: errors.mapped()
-      });
-    }
-
-    const data = matchedData(req);
-    let hash = bcrypt.hashSync(data.password, 10);
-    
-    data.password = hash;
-    console.log('Sanitized:', data);
-
-    db.users.addUser(data, function(err) {
-      if (err) {
-        data.password = "";
-        res.render('register', {
-          data: data,
-          errors: { registration: { msg: err.message }}
-        });
-      } else {
-        req.flash('success', 'Thanks for registering!');
-        res.redirect('/');
-      }
-    });
-
-  });
-
 app.listen(port);
 module.exports = app;
