@@ -6,7 +6,6 @@ const db = require('./db');
 const validator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const flash = require('express-flash');
-const bcrypt = require('bcrypt');
 const uuid = require('uuid/v4');
 const routes = require('./routes');
 var CognitoStrategy = require('passport-cognito')
