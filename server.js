@@ -9,6 +9,7 @@ const flash = require('express-flash');
 const bcrypt = require('bcrypt');
 const uuid = require('uuid/v4');
 const routes = require('./routes');
+var CognitoStrategy = require('passport-cognito')
 
 const middleware = [
   validator(),
@@ -21,31 +22,23 @@ const { matchedData } = require('express-validator/filter');
 
 var port = process.env.PORT || 3000;
 
-passport.use(new Strategy(
-  function(username, password, cb) {
-    db.users.findByUsername(username, function(err, user) {
-      if (err) { return cb(err); }
-      if (!user) { return cb(null, false); }
-      bcrypt.compare(password, user.password, function(err, res) {
-        if (res) {
-          return cb(null, user);
-        } else {
-          return cb(null, false);
-        }
-      });
-    });
+passport.use(new CognitoStrategy({
+    userPoolId: 'us-east-1_33nLW2pYv',
+    clientId: '4ifb9f6ld81cnlpnggt49jmns6',
+    region: 'us-east-1'
+  },
+  function(accessToken, idToken, refreshToken, user, cb) {
+    // TODO: not sure why this function exists
+    cb(null, user);
   }
 ));
 
 passport.serializeUser(function(user, cb) {
-  cb(null, user.username);
+  cb(null, {username: user.username, sub: user.sub});
 });
 
-passport.deserializeUser(function(username, cb) {
-  db.users.findByUsername(username, function (err, user) {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
+passport.deserializeUser(function(user, cb) {
+  cb(null, user);
 });
 
 

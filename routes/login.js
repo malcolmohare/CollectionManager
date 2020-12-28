@@ -9,9 +9,8 @@ routes.get('/login',
   });
 
 routes.post('/login',
-  passport.authenticate('local', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.redirect('/');
-  });
+  passport.authenticate('cognito',
+    {failureRedirect: '/login', successRedirect: '/'}
+));
 
 module.exports = routes;

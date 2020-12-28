@@ -2,7 +2,6 @@ const routes = require('express').Router();
 const validator = require('express-validator');
 const { check, validationResult } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
-const bcrypt = require('bcrypt');
 
 global.fetch = require('node-fetch');
 global.navigator = () => null;
@@ -62,13 +61,7 @@ routes.post('/register', [
         errors: errors.mapped()
       });
     }
-
     const data = matchedData(req);
-    let hash = bcrypt.hashSync(data.password, 10);
-    
-    data.password = hash;
-    console.log('Sanitized:', data);
-
     register(data, function(err, user) {
       if (err != null) {
         res.render('register', {
