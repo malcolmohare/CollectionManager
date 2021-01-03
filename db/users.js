@@ -1,6 +1,6 @@
 var AWS = require('aws-sdk');
 
-AWS.config.loadFromPath('./config/config.json');
+AWS.config.loadFromPath('./config/awsconfig.json');
 AWS.config.logger = console;
 
 var docClient = new AWS.DynamoDB.DocumentClient();
