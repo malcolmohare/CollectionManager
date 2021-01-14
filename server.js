@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const flash = require('express-flash');
 const uuid = require('uuid/v4');
 const routes = require('./routes');
+const config = require('config');
 var CognitoStrategy = require('passport-cognito')
 
 const middleware = [
@@ -21,10 +22,20 @@ const { matchedData } = require('express-validator/filter');
 
 var port = process.env.PORT || 3000;
 
+if (!config.has('cognito_user_pool')) {
+  throw new Error('missing cognito_user_pool config');
+}
+if (!config.has('cognito_app_client_id')) {
+  throw new Error('missing cognito_app_client_id config');
+}
+if (!config.has('region')) {
+  throw new Error('missing region config');
+}
+
 passport.use(new CognitoStrategy({
-    userPoolId: 'us-east-1_33nLW2pYv',
-    clientId: '4ifb9f6ld81cnlpnggt49jmns6',
-    region: 'us-east-1'
+    userPoolId: config.get('cognito_user_pool'),
+    clientId: config.get('cognito_app_client_id'),
+    region: config.get('region')
   },
   function(accessToken, idToken, refreshToken, user, cb) {
     // TODO: not sure why this function exists

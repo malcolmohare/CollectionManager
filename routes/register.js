@@ -2,14 +2,15 @@ const routes = require('express').Router();
 const validator = require('express-validator');
 const { check, validationResult } = require('express-validator/check');
 const { matchedData } = require('express-validator/filter');
+const config = require('config');
 
 global.fetch = require('node-fetch');
 global.navigator = () => null;
 
 const AmazonCognitoIdentity = require('amazon-cognito-identity-js');
 const poolData = {
-   UserPoolId: "us-east-1_33nLW2pYv",
-   ClientId: "4ifb9f6ld81cnlpnggt49jmns6"
+   UserPoolId: config.get('cognito_user_pool'),
+   ClientId: config.get('cognito_app_client_id')
 };
 const userPool = new AmazonCognitoIdentity.CognitoUserPool(poolData);
 
