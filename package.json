@@ -16,7 +16,7 @@
         "express-session": "1.15.6",
         "express-validator": "5.2.0",
         "morgan": "^1.10.0",
-        "node-fetch": "^2.6.1",
+        "node-fetch": "^2.6.7",
         "passport": "0.4.0",
         "passport-cognito": "git+https://github.com/EarthPeople/passport-cognito.git",
         "passport-local": "1.0.0",
