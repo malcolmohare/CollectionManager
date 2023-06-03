@@ -1,5 +1,5 @@
 *.swp
-node_modules/
-db/npm-debug.log
-config/config.json
-config/awsconfig.json
+node/node_modules/
+node/db/npm-debug.log
+node/config/config.json
+node/config/awsconfig.json
