@@ -1,2 +1,39 @@
-<h1>Collections#index</h1>
-<p>Find me in app/views/collections/index.html.erb</p>
+<h2> Collections </h2>
+
+<h3>Create</h3>
+<form action="/collections/collection-create" method="post">
+  <div>
+  <label>Collection Type:</label>
+  <input type="text" name="collectionType"/><br />
+  </div>
+  <div>
+  <label>Collection Name:</label>
+  <input type="text" name="collectionName"/><br />
+  </div>
+  <div>
+  <input type="submit" value="Submit"/>
+</form>
+
+<h3>Search</h3>
+
+<form action="/collections/" method="get">
+  <div>
+  <input type="text" name="collection-type" />
+  </div>  
+
+  <div>
+  <input type="submit" value="Search" />
+  </div>
+</form>
+
+<h3>Browse</h3>
+
+<ul>
+  <% @collections.each do |collection| %>
+    <li>
+      <a href="/collections/<%= collection.id %>">
+        <%= collection.name %>
+      </a>
+    </li>
+  <% end %>
+</ul>
