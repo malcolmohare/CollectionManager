@@ -1,0 +1,28 @@
+class CollectionItemsController < ApplicationController
+  def index
+    @collection_items = CollectionItem.all
+  end
+
+  def show
+    @collection_item = CollectionItem.find(params[:id])
+  end
+
+  def new
+    @collection_item = CollectionItem.new
+  end
+
+  def create
+    @collection_item = CollectionItem.new(collection_item_params)
+
+    if @collection_item.save
+      redirect_to @collection_item
+    else
+      render :new, status: :unprocessable_entity
+    end
+  end
+
+  private
+    def collection_item_params
+      params.require(:collection_item).permit(:name)
+    end
+end
