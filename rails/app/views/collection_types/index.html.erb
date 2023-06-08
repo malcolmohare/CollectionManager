@@ -1,0 +1,12 @@
+
+<a href="/collection_types/new">Create new collection</a>
+
+<ul>
+  <% @collection_types.each do |collection_type| %>
+    <li>
+      <a href="/collection_types/<%= collection_type.id %>">
+        <%= collection_type.name %>
+      </a>
+    </li>
+  <% end %>
+</ul>

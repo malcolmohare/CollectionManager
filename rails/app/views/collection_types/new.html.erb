@@ -1,0 +1,13 @@
+<h3>Create</h3>
+<%= form_with model: @collection_type do |form| %>
+  <div>
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+    <% @collection_type.errors.full_messages_for(:name).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
