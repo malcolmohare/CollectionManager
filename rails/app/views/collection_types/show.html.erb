@@ -1,1 +1,7 @@
 <h1><%= @collection_type.name %></h1>
+
+<ul>
+<% @collection_type.collections.each do |collection| %>
+  <li><a href="/collections/<%= collection.id %>"><%= collection.name %></a></li>
+<% end %>
+</ul>

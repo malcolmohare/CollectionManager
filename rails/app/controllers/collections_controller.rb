@@ -21,8 +21,23 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def edit
+    @collection = Collection.find(params[:id])
+  end
+
+  def update
+    @collection = Collection.find(params[:id])
+
+    if @collection.update(collection_params)
+      redirect_to @collection
+    else
+      render :edit, status: :unprocessable_entity
+
+    end
+  end
+
   private
     def collection_params
-      params.require(:collection).permit(:name)
+      params.require(:collection).permit(:name, :collection_type_id)
     end
 end
