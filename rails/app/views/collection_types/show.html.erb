@@ -1,7 +1,19 @@
-<h1><%= @collection_type.name %></h1>
+<% content_for :breadcrumb do %>
+  <div class="text-sm m-4">
+    <%= @collection_type.name %>
+  </div>
+<% end %>
 
-<ul>
+<div class="flex items-center justify-between flex-wrap">
+  <div class="text-lg">Category collections</div>
+  <a href="/collection_types/<%= @collection_type.id %>/edit"
+    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit</a>
+</div>
+<ul class="list-none">
 <% @collection_type.collections.each do |collection| %>
-  <li><a href="/collections/<%= collection.id %>"><%= collection.name %></a></li>
+  <li
+    class="w-full border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
+    <a href="/collections/<%= collection.id %>"><%= collection.name %></a>
+  </li>
 <% end %>
 </ul>

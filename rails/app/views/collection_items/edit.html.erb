@@ -1,5 +1,11 @@
-<h3><%= @collection_item.name %></h3>
-
-<p>Edit</p>
+<% content_for :breadcrumb do %>
+    <div class="text-sm m-4">
+      <a href="/collection_types/<%= @collection_item.collection.collection_type.id %>"><%= @collection_item.collection.collection_type.name %></a>
+      <span>/</span>
+      <%= @collection_item.collection.name %>
+      <span>/</span>
+      <%= @collection_item.name %>
+    </div>
+  <% end %>
 
 <%= render "form", collection_item: @collection_item %>

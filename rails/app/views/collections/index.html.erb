@@ -1,24 +1,23 @@
 <h2> Collections </h2>
 
-<a href="/collections/new">Create new collection</a>
-
-<h3>Search</h3>
-
-<form action="/collections/" method="get">
-  <div>
-  <input type="text" name="collection-type" />
-  </div>  
-
-  <div>
-  <input type="submit" value="Search" />
-  </div>
+<form action="/collections/" method="get" class="flex flex-row py-4">
+    <div class="basis-1/2">
+      <input type="text" name="collection-type" placeholder="Search..." />
+    </div>
+    <div class="basis-1/4">
+      <input type="submit" value="Search" class="hidden" />
+    </div>
+    <div class="basis-1/4">
+      <a href="/collections/new"
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create new collection</a>
+    </div>
 </form>
 
-<h3>Browse</h3>
 
-<ul>
+<ul class="list-none">
   <% @collections.each do |collection| %>
-    <li>
+    <li
+      class="w-full border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
       <a href="/collections/<%= collection.id %>">
         <%= collection.name %>
       </a>
