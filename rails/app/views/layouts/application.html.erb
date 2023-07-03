@@ -5,29 +5,38 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <div class="container">
-      <% flash.each do |key, value| %>
-        <div class="alert alert-<%= key %>">
-          <%= value %>
-        </div>
-      <% end %>
-    </div>
+    <% if flash.present? %>
+      <div class="container">
+        <% flash.each do |key, value| %>
+          <div class="alert alert-<%= key %>">
+            <%= value %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
-    <div>
-      <% if user_signed_in? %>
-        <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to 'Log In', new_user_session_path %>
-        <%= link_to 'Sign Up', new_user_registration_path %>
-      <% end %>
-    </div>
+    <nav class="flex items-center justify-between flex-wrap bg-teal-500 p-6">
+      <div class="class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="text-sm lg:flex-grow">
+          <a href="/collection_types" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4">Categories</a>
+          <a href="/collections" class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mt-4">Collections</a>
+        </div>
+      </div>
+      <div>
+        <% if user_signed_in? %>
+          <%= button_to 'Log out', destroy_user_session_path, method: :delete %>
+        <% else %>
+          <%= link_to 'Log In', new_user_session_path, class: "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" %>
+          <%= link_to 'Sign Up', new_user_registration_path, class: "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" %>
+        <% end %>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>
