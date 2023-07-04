@@ -9,13 +9,14 @@ class CollectionItemsController < ApplicationController
 
   def new
     @collection_item = CollectionItem.new
+    @collection_item.collection_id = params[:collection_id] if params[:collection_id].present?
   end
 
   def create
     @collection_item = CollectionItem.new(collection_item_params)
 
     if @collection_item.save
-      redirect_to @collection_item
+      redirect_to @collection_item.collection
     else
       render :new, status: :unprocessable_entity
     end
