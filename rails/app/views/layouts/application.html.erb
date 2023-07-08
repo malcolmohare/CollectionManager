@@ -33,7 +33,7 @@
       <div>
         <% if user_signed_in? %>
           <%= link_to 'Profile', edit_user_registration_path, class: "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" %>
-          <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" %>
+          <%= button_to 'Log out', destroy_user_session_path, method: :delete, class: "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0", form_class: "inline-block" %>
         <% else %>
           <%= link_to 'Log In', new_user_session_path, class: "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" %>
           <%= link_to 'Sign Up', new_user_registration_path, class: "inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0" %>
