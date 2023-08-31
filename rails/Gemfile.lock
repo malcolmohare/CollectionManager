@@ -121,6 +121,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
+    mini_portile2 (2.8.4)
     minitest (5.18.0)
     msgpack (1.7.1)
     net-imap (0.3.4)
@@ -133,6 +134,11 @@ GEM
     net-smtp (0.3.3)
       net-protocol
     nio4r (2.5.9)
+    nokogiri (1.15.2)
+      mini_portile2 (~> 2.8.2)
+      racc (~> 1.4)
+    nokogiri (1.15.2-arm64-darwin)
+      racc (~> 1.4)
     nokogiri (1.15.2-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
@@ -190,8 +196,15 @@ GEM
       actionpack (>= 5.2)
       activesupport (>= 5.2)
       sprockets (>= 3.0.0)
+    sqlite3 (1.6.3)
+      mini_portile2 (~> 2.8.0)
+    sqlite3 (1.6.3-arm64-darwin)
     sqlite3 (1.6.3-x86_64-linux)
     stimulus-rails (1.2.1)
+      railties (>= 6.0.0)
+    tailwindcss-rails (2.0.29)
+      railties (>= 6.0.0)
+    tailwindcss-rails (2.0.29-arm64-darwin)
       railties (>= 6.0.0)
     tailwindcss-rails (2.0.29-x86_64-linux)
       railties (>= 6.0.0)
@@ -223,6 +236,8 @@ GEM
     zeitwerk (2.6.8)
 
 PLATFORMS
+  arm64-darwin
+  ruby
   x86_64-linux
 
 DEPENDENCIES
