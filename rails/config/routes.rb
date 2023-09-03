@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root "collections#index"
+  root "home_page#index"
   
   resources :collections
   resources :collection_types

@@ -1,0 +1,16 @@
+<p>Welcome to collection manager!</p>
+
+<p>Some blurb about how to use it</p>
+
+<h3>Newest Collections</h3>
+<ul class="list-none">
+  <% @collections.each do |collection| %>
+    <li
+      class="w-full border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
+      <a href="/collections/<%= collection.id %>">
+        <%= collection.name %>
+      </a>
+      <p><%= collection.collection_type.name %></p>
+    </li>
+  <% end %>
+</ul>
