@@ -7,6 +7,13 @@
   <% @collections.each do |collection| %>
     <li
       class="w-full border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
+      <% if user_signed_in? %>
+        <% if current_user.user_collections.any? {|c| c.collection_id == collection.id} %>
+          <p>Collecting</p>
+        <% else %>
+          <p><a href="/collections/<%= collection.id %>/collect">Start Collection</a></p>
+        <% end %>
+      <% end %>
       <a href="/collections/<%= collection.id %>">
         <%= collection.name %>
       </a>

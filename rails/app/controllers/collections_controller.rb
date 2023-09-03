@@ -36,6 +36,12 @@ class CollectionsController < ApplicationController
     end
   end
 
+  def collect
+    @collection = Collection.find(params[:id])
+    UserCollection.create([{user: current_user, collection: @collection}])
+    render :show
+  end
+
   private
     def collection_params
       params.require(:collection).permit(:name, :collection_type_id)

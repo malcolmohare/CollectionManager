@@ -4,4 +4,5 @@ class Collection < ApplicationRecord
 
     belongs_to :collection_type
     has_many :collection_items
+    has_many :user_collections
 end

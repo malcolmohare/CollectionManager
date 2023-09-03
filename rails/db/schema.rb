@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_13_002002) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_03_035957) do
   create_table "collection_items", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -33,6 +33,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_002002) do
     t.index ["collection_type_id"], name: "index_collections_on_collection_type_id"
   end
 
+  create_table "user_collections", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "collection_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collection_id"], name: "index_user_collections_on_collection_id"
+    t.index ["user_id"], name: "index_user_collections_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -48,4 +57,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_002002) do
 
   add_foreign_key "collection_items", "collections"
   add_foreign_key "collections", "collection_types"
+  add_foreign_key "user_collections", "collections"
+  add_foreign_key "user_collections", "users"
 end
