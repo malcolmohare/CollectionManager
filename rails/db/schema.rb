@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_09_03_035957) do
+ActiveRecord::Schema[7.0].define(version: 2023_09_07_131443) do
   create_table "collection_items", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -31,6 +31,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_035957) do
     t.datetime "updated_at", null: false
     t.integer "collection_type_id"
     t.index ["collection_type_id"], name: "index_collections_on_collection_type_id"
+  end
+
+  create_table "user_collection_items", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "collection_item_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["collection_item_id"], name: "index_user_collection_items_on_collection_item_id"
+    t.index ["user_id"], name: "index_user_collection_items_on_user_id"
   end
 
   create_table "user_collections", force: :cascade do |t|
@@ -57,6 +66,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_03_035957) do
 
   add_foreign_key "collection_items", "collections"
   add_foreign_key "collections", "collection_types"
+  add_foreign_key "user_collection_items", "collection_items"
+  add_foreign_key "user_collection_items", "users"
   add_foreign_key "user_collections", "collections"
   add_foreign_key "user_collections", "users"
 end

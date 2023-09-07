@@ -26,3 +26,7 @@ user = User.create! :name => 'John Doe', :email => 'john@doe.com', :password => 
 UserCollection.create([
   {user: user, collection: collections[0]}
 ])
+
+UserCollectionItem.create([
+  {user: user, collection_item: collection_items[0]}
+])

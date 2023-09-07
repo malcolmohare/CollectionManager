@@ -27,6 +27,13 @@
 <% @collection.items.each do |item| %>
   <li
     class="w-full border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
+      <% if user_signed_in? %>
+        <% if current_user.user_collection_items.any? { |x| x.collection_item_id == item.id } %>
+          <span>collected</span>
+        <% else %>
+          <span>uncollected</span>
+        <% end %>
+      <% end %>
       <a href="/collection_items/<%= item.id %>"><%= item.name %></a>
   </li>
 <% end %>
