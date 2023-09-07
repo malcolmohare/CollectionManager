@@ -42,6 +42,12 @@ class CollectionsController < ApplicationController
     render :show
   end
 
+  def uncollect
+    @collection = Collection.find(params[:id])
+    UserCollection.find_by(user_id: current_user.id, collection_id: @collection.id).delete
+    render :show
+  end
+
   private
     def collection_params
       params.require(:collection).permit(:name, :collection_type_id)

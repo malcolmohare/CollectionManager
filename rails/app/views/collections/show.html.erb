@@ -6,6 +6,15 @@
   </div>
 <% end %>
 
+<% if user_signed_in? %>
+  <% if current_user.user_collections.any? { |x| x.collection_id == @collection.id } %>
+    You are collecting this collection.
+    <a href="/collections/<%= @collection.id %>/uncollect">Stop collection</a>
+  <% else %>
+    <a href="/collections/<%= @collection.id %>/collect">Start collecting</a>
+  <% end %>
+<% end %>
+
 <div class="flex items-center justify-between flex-wrap">
   <div class="text-lg w-full block flex-grow lg:flex lg:items-center lg:w-auto">Collection items</div>
   <a href="/collection_items/new?collection_id=<%= @collection.id %>"

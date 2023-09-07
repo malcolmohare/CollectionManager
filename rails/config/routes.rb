@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   resources :collection_items
 
   get '/collections/:id/collect', to: 'collections#collect'
+  get '/collections/:id/uncollect', to: 'collections#uncollect'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
