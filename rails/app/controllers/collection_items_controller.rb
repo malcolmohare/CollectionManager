@@ -37,6 +37,18 @@ class CollectionItemsController < ApplicationController
     end
   end
 
+  def collect
+    @collection_item = CollectionItem.find(params[:id])
+    UserCollectionItem.create([{user: current_user, collection_item: @collection_item}])
+    render :show
+  end
+
+  def uncollect
+    @collection_item = CollectionItem.find(params[:id])
+    UserCollectionItem.find_by(user_id: current_user.id, collection_item_id: @collection_item.id).delete
+    render :show
+  end
+
   private
     def collection_item_params
       params.require(:collection_item).permit(:name, :collection_id)
