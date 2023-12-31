@@ -23,26 +23,9 @@
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit Collection</a>
 </div>
 
-<ul class="list-none">
-<table class="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-    <% if user_signed_in? %><th class="px-6 py-3">Collecting State</th><% end %>
-    <th class="px-6 py-3">Item</th>
-  </thead>
-  <tbody>
-    <% @collection.items.each do |item| %>
-      <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-        <% if user_signed_in? %>
-          <td class="px-6 py-4">
-            <% if current_user.user_collection_items.any? { |x| x.collection_item_id == item.id } %>
-              <span class="bg-green-100 sm:rounded px-2 py-2"><a href="/collection_items/<%= item.id %>/uncollect">Collected</a></span>
-            <% else %>
-              <span class="bg-red-100 sm:rounded px-2 py-2"><a href="/collection_items/<%= item.id %>/collect">Don't Have</a></span>
-            <% end %>
-          </td>
-        <% end %>
-        <td class="px-6 py-4"><a href="/collection_items/<%= item.id %>"><%= item.name %></a></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+
+<% table_headers = ["Item", user_signed_in? ? "Collecting State" : nil].compact %>
+
+<%= render "table", table_headers: table_headers do %>
+  <%= render partial: "collection_item", collection: @collection.items %>
+<% end %>
