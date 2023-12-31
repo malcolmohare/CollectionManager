@@ -2,7 +2,7 @@
 
 <form action="/collections/" method="get" class="flex flex-row py-4">
     <div class="basis-1/2">
-      <input type="text" name="collection-type" placeholder="Search..." />
+      <input type="text" name="search" placeholder="Search..." />
     </div>
     <div class="basis-1/4">
       <input type="submit" value="Search" class="hidden" />
@@ -13,14 +13,8 @@
     </div>
 </form>
 
+<% table_headers = ["Collection Name", user_signed_in? ? "Collecting State" : nil , "# Items", "Category"].compact %>
 
-<ul class="list-none">
-  <% @collections.each do |collection| %>
-    <li
-      class="w-full border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
-      <a href="/collections/<%= collection.id %>">
-        <%= collection.name %>
-      </a>
-    </li>
-  <% end %>
-</ul>
+<%= render "table", table_headers: table_headers do %>
+  <%= render partial: "collection", collection: @collections %>
+<% end %>

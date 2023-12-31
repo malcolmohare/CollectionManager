@@ -1,6 +1,10 @@
 class CollectionsController < ApplicationController
   def index
-    @collections = Collection.all
+    if params[:search].present?
+      @collections = Collection.search(params[:search])
+    else
+      @collections = Collection.all
+    end
   end
 
   def show

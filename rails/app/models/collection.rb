@@ -5,4 +5,10 @@ class Collection < ApplicationRecord
     belongs_to :collection_type
     has_many :collection_items
     has_many :user_collections
+
+    def self.search val
+      if val
+        where("name LIKE ?", "%#{val}%")
+      end
+    end
 end
