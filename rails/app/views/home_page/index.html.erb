@@ -1,11 +1,21 @@
+<% collection_table_headers = ["Collection Name", user_signed_in? ? "Collecting State" : nil , "# Items", "Category"].compact %>
+<% collection_items_table_headers = ["Item", "Collection Name", user_signed_in? ? "Collecting State" : nil, "Category"].compact %>
+
 <p>Welcome to collection manager!</p>
 
 <p>Some blurb about how to use it</p>
 
-<h3>Newest Collections</h3>
+<h3 class="mb-4 mt-4 text-xl">Newest Collections</h3>
 
-<% table_headers = ["Collection Name", user_signed_in? ? "Collecting State" : nil , "# Items", "Category"].compact %>
+<div class="px-5 py-5">
+  <%= render "table", table_headers: collection_table_headers do %>
+    <%= render partial: "collection", collection: @collections %>
+  <% end %>
+</div>
 
-<%= render "table", table_headers: table_headers do %>
-  <%= render partial: "collection", collection: @collections %>
-<% end %>
+<h3 class="mb-4 mt-4 text-xl">Newest Items</h3>
+<div class="px-5 py-5">
+  <%= render "table", table_headers: collection_items_table_headers do %>
+    <%= render partial: "collection_item", collection: @collection_items %>
+  <% end %>
+</div>

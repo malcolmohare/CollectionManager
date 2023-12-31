@@ -11,4 +11,8 @@ class Collection < ApplicationRecord
         where("name LIKE ?", "%#{val}%")
       end
     end
+
+    def self.newest count
+      order(created_at: :desc).limit(count)
+    end
 end

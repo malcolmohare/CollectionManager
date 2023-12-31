@@ -1,0 +1,20 @@
+<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+  <td class="px-6 py-4">
+    <a href="/collection_items/<%= collection_item.id %>"><%= collection_item.name %></a>
+  </td>
+  <td class="px-6 py-4">
+    <a href="/collection/<%= collection_item.collection.id %>"><%= collection_item.collection.name %></a>
+  </td>
+  <% if user_signed_in? %>
+  <td class="px-6 py-4">
+    <% if current_user.user_collection_items.any? {|ci| ci.collection_item_id == collection_item.id} %>
+      <span class="bg-green-100 sm:rounded px-2 py-2">Collecting</span>
+    <% else %>
+      <span class="bg-red-100 sm:rounded px-2 py-2"><a href="/collection_items/<%= collection_item.id %>/collect">Not collected</a></span>
+    <% end %>
+  <% end %>
+  </td>
+  <td class="px-6 py-4">
+    <a href="/collection_types/<%= collection_item.collection.collection_type.id %>"><%= collection_item.collection.collection_type.name %></a>
+  </td>
+</tr>
