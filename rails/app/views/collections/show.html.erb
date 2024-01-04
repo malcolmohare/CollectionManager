@@ -19,6 +19,8 @@
   <div class="text-lg w-full block flex-grow lg:flex lg:items-center lg:w-auto">Collection items</div>
   <a href="/collection_items/new?collection_id=<%= @collection.id %>"
   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add Item</a>
+  <a href="/collections/<%= @collection.id %>/bulk_create_items"
+  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add Items</a>
   <a href="/collections/<%= @collection.id %>/edit"
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit Collection</a>
 </div>

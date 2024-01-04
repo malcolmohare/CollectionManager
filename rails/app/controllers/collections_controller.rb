@@ -58,7 +58,7 @@ class CollectionsController < ApplicationController
   def process_bulk_create_items
     @collection = Collection.find(params[:id])
     items = params[:items]
-    items.split(",").each do |item_name|
+    items.split(",").map{ |x| x.strip }.each do |item_name|
       CollectionItem.new(name: item_name, collection: @collection).save
     end
     render :show
