@@ -1,8 +1,9 @@
+<% skip_collection_state = false unless defined?(skip_collection_state) %>
 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
   <td class="px-6 py-4">
     <a href="/collections/<%= collection.id %>"><%= collection.name %></a>
   </td>
-  <% if user_signed_in? %>
+  <% if user_signed_in? && !skip_collection_state  %>
   <td class="px-6 py-4">
     <% if current_user.user_collections.any? {|c| c.collection_id == collection.id} %>
       <span class="bg-green-100 sm:rounded px-2 py-2">Collecting</span>

@@ -5,6 +5,16 @@
 
 <p>Some blurb about how to use it</p>
 
+<% if user_signed_in? %>
+  <h3 class="mb-4 mt-4 text-xl">Your Collections</h3>
+
+  <div class="px-5 py-5">
+    <%= render "table", table_headers: collection_table_headers.filter{|x| x != "Collecting State"} do %>
+      <%= render partial: "collection", collection: current_user.user_collections.map{|x| x.collection}, locals: {skip_collection_state:true} %>
+    <% end %>
+  </div>
+<% end %>
+
 <h3 class="mb-4 mt-4 text-xl">Newest Collections</h3>
 
 <div class="px-5 py-5">
