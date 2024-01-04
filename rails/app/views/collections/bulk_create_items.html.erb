@@ -1,0 +1,7 @@
+<h3>Bulk Create</h3>
+
+<p>Provide a comma delimeted list of items to add to the collection</p>
+<%= form_with class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" do |form| %>
+  <%= form.text_area(:items) %>
+  <%= render "submit_button", form: form %>
+<% end %>

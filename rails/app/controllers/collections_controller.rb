@@ -52,6 +52,18 @@ class CollectionsController < ApplicationController
     render :show
   end
 
+  def bulk_create_items
+    @collection = Collection.find(params[:id])
+  end
+  def process_bulk_create_items
+    @collection = Collection.find(params[:id])
+    items = params[:items]
+    items.split(",").each do |item_name|
+      CollectionItem.new(name: item_name, collection: @collection).save
+    end
+    render :show
+  end
+
   private
     def collection_params
       params.require(:collection).permit(:name, :collection_type_id)
