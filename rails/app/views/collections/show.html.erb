@@ -15,6 +15,10 @@
   <% end %>
 <% end %>
 
+<div>
+  Collection Progress:  <%= current_user.user_collection_items.select { |x| x.collection_item.collection == @collection }.count %> of <%= @collection.items.count %>
+</div>
+
 <div class="flex items-center justify-between flex-wrap">
   <div class="text-lg w-full block flex-grow lg:flex lg:items-center lg:w-auto">Collection items</div>
   <a href="/collection_items/new?collection_id=<%= @collection.id %>"
@@ -29,5 +33,5 @@
 <% table_headers = ["Item", user_signed_in? ? "Collecting State" : nil].compact %>
 
 <%= render "table", table_headers: table_headers do %>
-  <%= render partial: "collection_item", collection: @collection.items %>
+  <%= render partial: "collection_item", collection: @collection.items.sort_by(&:name) %>
 <% end %>
