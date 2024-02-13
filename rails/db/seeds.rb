@@ -8,6 +8,7 @@
 
 return if Rails.env == "production"
 
+UserCollectionItem.destroy_all
 UserCollection.destroy_all
 CollectionItem.destroy_all
 Collection.destroy_all
