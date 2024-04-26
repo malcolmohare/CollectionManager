@@ -1,6 +1,8 @@
 <div class="flex flex-row">
   <span class="basis-1/2">Categories</span>
+  <% if user_signed_in? %>
   <a href="/collection_types/new" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create new collection type</a>
+  <% end %>
 </div>
 
 

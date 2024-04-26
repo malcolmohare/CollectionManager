@@ -12,7 +12,12 @@ class CollectionsController < ApplicationController
   end
 
   def new
-    @collection = Collection.new
+    # redirect to index page if not signed it
+    if !user_signed_in?
+      redirect_to collections_path, notice: "Please sign in to create a collection"
+    else
+      @collection = Collection.new
+    end
   end
 
   def create
