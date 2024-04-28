@@ -1,4 +1,6 @@
-class CollectionsController < ApplicationController
+class CollectionsController < BaseController
+  before_action :redirect_if_not_logged_in, only: [:new, :create, :edit, :update, :collect, :uncollect, :bulk_create_items, :process_bulk_create_items]
+
   def index
     if params[:search].present?
       @collections = Collection.search(params[:search])
@@ -12,12 +14,7 @@ class CollectionsController < ApplicationController
   end
 
   def new
-    # redirect to index page if not signed it
-    if !user_signed_in?
-      redirect_to collections_path, notice: "Please sign in to create a collection"
-    else
-      @collection = Collection.new
-    end
+    @collection = Collection.new
   end
 
   def create
