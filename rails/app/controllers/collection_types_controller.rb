@@ -1,4 +1,6 @@
-class CollectionTypesController < ApplicationController
+class CollectionTypesController < BaseController
+  before_action :redirect_if_not_logged_in, only: [:new, :create]
+  
   def index
     @collection_types = CollectionType.all
   end
@@ -22,7 +24,7 @@ class CollectionTypesController < ApplicationController
   end
 
   private
-    def collection_type_params
-      params.require(:collection_type).permit(:name)
-    end
+  def collection_type_params
+    params.require(:collection_type).permit(:name)
+  end
 end

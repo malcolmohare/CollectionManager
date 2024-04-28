@@ -6,8 +6,10 @@
 
 <div class="flex items-center justify-between flex-wrap">
   <div class="text-lg">Category collections</div>
-  <a href="/collection_types/<%= @collection_type.id %>/edit"
-    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit</a>
+  <% if user_signed_in? %>
+    <a href="/collection_types/<%= @collection_type.id %>/edit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit</a>
+  <% end %>
 </div>
 <ul class="list-none">
 <% @collection_type.collections.each do |collection| %>

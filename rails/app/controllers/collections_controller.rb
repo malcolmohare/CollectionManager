@@ -1,4 +1,6 @@
-class CollectionsController < ApplicationController
+class CollectionsController < BaseController
+  before_action :redirect_if_not_logged_in, only: [:new, :create, :edit, :update, :collect, :uncollect, :bulk_create_items, :process_bulk_create_items]
+
   def index
     if params[:search].present?
       @collections = Collection.search(params[:search])

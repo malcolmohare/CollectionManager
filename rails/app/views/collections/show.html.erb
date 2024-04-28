@@ -13,20 +13,22 @@
   <% else %>
     <a href="/collections/<%= @collection.id %>/collect">Start collecting</a>
   <% end %>
-<% end %>
+
 
 <div>
   Collection Progress:  <%= current_user.user_collection_items.select { |x| x.collection_item.collection == @collection }.count %> of <%= @collection.items.count %>
 </div>
-
+<% end %>
 <div class="flex items-center justify-between flex-wrap">
   <div class="text-lg w-full block flex-grow lg:flex lg:items-center lg:w-auto">Collection items</div>
+  <% if user_signed_in? %>
   <a href="/collection_items/new?collection_id=<%= @collection.id %>"
   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add Item</a>
   <a href="/collections/<%= @collection.id %>/bulk_create_items"
   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add Items</a>
   <a href="/collections/<%= @collection.id %>/edit"
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit Collection</a>
+  <% end %>
 </div>
 
 

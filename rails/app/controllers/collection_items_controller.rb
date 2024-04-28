@@ -1,4 +1,7 @@
-class CollectionItemsController < ApplicationController
+class CollectionItemsController < BaseController
+
+  before_action :redirect_if_not_logged_in, only: [:new, :create, :edit, :update, :collect, :uncollect]
+
   def index
     @collection_items = CollectionItem.all
   end
