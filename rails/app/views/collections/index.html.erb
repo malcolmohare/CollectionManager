@@ -8,8 +8,10 @@
       <input type="submit" value="Search" class="hidden" />
     </div>
     <div class="basis-1/4">
+    <% if user_signed_in? %>
       <a href="/collections/new"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create new collection</a>
+    <% end %>
     </div>
 </form>
 
