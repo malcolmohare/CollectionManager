@@ -19,10 +19,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_04_28_222211) do
     t.index ["collection_id"], name: "index_collection_items_on_collection_id"
   end
 
+  create_table "collection_type_actions", force: :cascade do |t|
+    t.json "metadata"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index "\"collection_type_id\"", name: "index_collection_type_actions_on_collection_type_id"
+  end
+
   create_table "collection_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "actions"
   end
 
   create_table "collections", force: :cascade do |t|
