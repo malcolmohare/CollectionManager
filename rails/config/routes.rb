@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   post '/collections/:id/bulk_create_items', to: 'collections#process_bulk_create_items', as: 'process_bulk_create_items'
   get '/collection_items/:id/collect', to: 'collection_items#collect'
   get '/collection_items/:id/uncollect', to: 'collection_items#uncollect'
+  get '/admin', to: 'admin#index'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
