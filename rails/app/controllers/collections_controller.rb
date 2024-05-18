@@ -35,7 +35,10 @@ class CollectionsController < BaseController
 
   def update
     @collection = Collection.find(params[:id])
-    redirect_to collections_path, notice: "Not authorized" if @collection.creator != current_user
+    if @collection.creator != current_user
+      redirect_to collections_path, notice: "Not authorized"
+      return
+    end
 
     if @collection.update(collection_params)
       redirect_to @collection
@@ -61,9 +64,13 @@ class CollectionsController < BaseController
     @collection = Collection.find(params[:id])
     redirect_to collections_path, notice: "Not authorized" if @collection.creator != current_user
   end
+
   def process_bulk_create_items
     @collection = Collection.find(params[:id])
-    redirect_to collections_path, notice: "Not authorized" if @collection.creator != current_user
+    if @collection.creator != current_user
+      redirect_to collections_path, notice: "Not authorized"
+      return
+    end
     items = params[:items]
     items.split(",").map{ |x| x.strip }.each do |item_name|
       CollectionItem.new(name: item_name, collection: @collection).save

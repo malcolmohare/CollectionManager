@@ -3,6 +3,8 @@
 one:
   name: MyString
   collection_type: :one
+  creator: :one
 
 two:
   name: MyString
+  collection_type: :two
