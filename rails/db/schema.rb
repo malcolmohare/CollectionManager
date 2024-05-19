@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_18_205757) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_19_015050) do
   create_table "collection_items", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "collection_id"
+    t.integer "creator_id"
     t.index ["collection_id"], name: "index_collection_items_on_collection_id"
+    t.index ["creator_id"], name: "index_collection_items_on_creator_id"
   end
 
   create_table "collection_type_actions", force: :cascade do |t|
@@ -77,6 +79,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_18_205757) do
   end
 
   add_foreign_key "collection_items", "collections"
+  add_foreign_key "collection_items", "users", column: "creator_id"
   add_foreign_key "collections", "collection_types"
   add_foreign_key "collections", "users", column: "creator_id"
   add_foreign_key "user_collection_items", "collection_items"

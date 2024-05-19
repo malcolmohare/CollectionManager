@@ -17,6 +17,7 @@ class CollectionItemsController < BaseController
 
   def create
     @collection_item = CollectionItem.new(collection_item_params)
+    @collection_item.creator = current_user
 
     if @collection_item.save
       redirect_to @collection_item.collection
@@ -27,10 +28,15 @@ class CollectionItemsController < BaseController
 
   def edit
     @collection_item = CollectionItem.find(params[:id])
+    redirect_to collection_items_path, notice: "Not authorized" if @collection_item.creator != current_user
   end
 
   def update
     @collection_item = CollectionItem.find(params[:id])
+    if @collection_item.creator != current_user
+      redirect_to collection_items_path, notice: "Not authorized"
+      return
+    end
 
     if @collection_item.update(collection_item_params)
       redirect_to @collection_item

@@ -2,6 +2,10 @@
 
 one:
   name: MyString
+  creator: :one
+  collection: :one
 
 two:
   name: MyString
+  creator: :two
+  collection: :one
