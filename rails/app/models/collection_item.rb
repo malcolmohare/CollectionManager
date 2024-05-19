@@ -1,5 +1,6 @@
 class CollectionItem < ApplicationRecord
     belongs_to :collection
+    belongs_to :creator, class_name: 'User'
 
     validates :name, uniqueness: { scope: :collection, message: "collections should not have duplicate entries"}
 
