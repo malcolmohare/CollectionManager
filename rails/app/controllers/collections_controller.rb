@@ -73,7 +73,7 @@ class CollectionsController < BaseController
     end
     items = params[:items]
     items.split(",").map{ |x| x.strip }.each do |item_name|
-      CollectionItem.new(name: item_name, collection: @collection).save
+      CollectionItem.new(name: item_name, collection: @collection, creator: current_user).save
     end
     render :show
   end
