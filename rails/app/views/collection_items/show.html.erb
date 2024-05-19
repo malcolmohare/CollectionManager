@@ -8,7 +8,7 @@
   </div>
 <% end %>
 
-<% if user_signed_in? %>
+<% if user_signed_in? and @collection_item.creator == current_user %>
   <% if current_user.user_collection_items.any? { |x| x.collection_item_id == @collection_item.id } %>
     You have collected this item.
     <a href="/collection_items/<%= @collection_item.id %>/uncollect">Mark as not collected</a>
