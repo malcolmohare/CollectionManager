@@ -14,15 +14,22 @@ Item.destroy_all
 Collection.destroy_all
 CollectionType.destroy_all
 User.destroy_all
-collection_types = CollectionType.create([{name: "Video Games"}, {name: "Miniature Games"}, {name: "Board Games"}])
-collections = Collection.create([
-  {name: "NES", collection_type: collection_types[0]},
-  {name: "Star Wars: Legion", collection_type: collection_types[1]},
-  {name: "Catan", collection_type: collection_types[2]}
-])
-items = Item.create([{name: "Duck Hunt", collection: collections[0]}, {name: "Super Mario Bros.", collection: collections[0]}])
-
 user = User.create! :name => 'John Doe', :email => 'john@doe.com', :password => 'test1234', :password_confirmation => 'test1234'
+
+collection_types = CollectionType.create([{name: "Video Games"}, {name: "Miniature Games"}, {name: "Board Games"}])
+collections = Collection.create!([
+  {name: "NES", collection_type: collection_types[0], creator: user},
+  {name: "Star Wars: Legion", collection_type: collection_types[1], creator: user},
+  {name: "Catan", collection_type: collection_types[2], creator: user},
+])
+collections.concat Collection.create!([
+  {name: "NES Marios", collection_type: collection_types[0], creator: user, parent: collections[0]},
+])
+
+items = Item.create!([
+  {name: "Duck Hunt", collection: collections[0], creator: user},
+  {name: "Super Mario Bros.", collection: collections[0], creator: user},
+])
 
 UserCollection.create([
   {user: user, collection: collections[0]}
