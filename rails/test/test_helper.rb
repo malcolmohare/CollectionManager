@@ -11,5 +11,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   # Add more helper methods to be used by all tests here...
-  SimpleCov.start
+  SimpleCov.start do
+    add_filter "/test/"
+  end
 end
