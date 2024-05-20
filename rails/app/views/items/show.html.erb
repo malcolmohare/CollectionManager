@@ -8,7 +8,7 @@
   </div>
 <% end %>
 
-<% if user_signed_in? and @item.creator == current_user %>
+<% if user_signed_in? %>
   <% if current_user.user_items.any? { |x| x.item_id == @item.id } %>
     You have collected this item.
     <a href="/items/<%= @item.id %>/uncollect">Mark as not collected</a>
@@ -17,6 +17,6 @@
   <% end %>
 <% end %>
 
-<% if user_signed_in? %>
+<% if user_signed_in? and @item.creator == current_user %>
 <a href="/items/<%= @item.id %>/edit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit</a>
 <% end %>
