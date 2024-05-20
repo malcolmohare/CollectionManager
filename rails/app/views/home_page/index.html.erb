@@ -1,5 +1,5 @@
 <% collection_table_headers = ["Collection Name", user_signed_in? ? "Collecting State" : nil , "# Items", "Category"].compact %>
-<% collection_items_table_headers = ["Item", "Collection Name", user_signed_in? ? "Collecting State" : nil, "Category"].compact %>
+<% items_table_headers = ["Item", "Collection Name", user_signed_in? ? "Collecting State" : nil, "Category"].compact %>
 
 <p>Welcome to collection manager!</p>
 
@@ -25,7 +25,7 @@
 
 <h3 class="mb-4 mt-4 text-xl">Newest Items</h3>
 <div class="px-5 py-5">
-  <%= render "table", table_headers: collection_items_table_headers do %>
-    <%= render partial: "collection_item", collection: @collection_items %>
+  <%= render "table", table_headers: items_table_headers do %>
+    <%= render partial: "item", collection: @items %>
   <% end %>
 </div>

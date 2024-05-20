@@ -1,4 +1,4 @@
-class CollectionItem < ApplicationRecord
+class Item < ApplicationRecord
     belongs_to :collection
     belongs_to :creator, class_name: 'User'
 

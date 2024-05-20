@@ -1,0 +1,11 @@
+<% content_for :breadcrumb do %>
+    <div class="text-sm m-4">
+      <a href="/collection_types/<%= @item.collection.collection_type.id %>"><%= @item.collection.collection_type.name %></a>
+      <span>/</span>
+      <%= @item.collection.name %>
+      <span>/</span>
+      <%= @item.name %>
+    </div>
+  <% end %>
+
+<%= render "form", item: @item %>

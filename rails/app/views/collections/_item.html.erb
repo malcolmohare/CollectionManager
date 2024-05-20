@@ -1,0 +1,14 @@
+<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+  <td class="px-6 py-4">
+    <a href="/items/<%= item.id %>"><%= item.name %></a>
+  </td>
+  <% if user_signed_in? %>
+  <td class="px-6 py-4">
+    <% if current_user.user_items.any? {|ci| ci.item_id == item.id} %>
+      <span class="bg-green-100 sm:rounded px-2 py-2">Collecting</span>
+    <% else %>
+      <span class="bg-red-100 sm:rounded px-2 py-2"><a href="/items/<%= item.id %>/collect">Not collected</a></span>
+    <% end %>
+  <% end %>
+  </td>
+</tr>

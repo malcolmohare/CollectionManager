@@ -1,0 +1,22 @@
+<% content_for :breadcrumb do %>
+  <div class="text-sm m-4">
+    <a href="/collection_types/<%= @item.collection.collection_type.id %>"><%= @item.collection.collection_type.name %></a>
+    <span>/</span>
+    <a href="/collections/<%= @item.collection.id %>"><%= @item.collection.name %></a>
+    <span>/</span>
+    <%= @item.name %>
+  </div>
+<% end %>
+
+<% if user_signed_in? and @item.creator == current_user %>
+  <% if current_user.user_items.any? { |x| x.item_id == @item.id } %>
+    You have collected this item.
+    <a href="/items/<%= @item.id %>/uncollect">Mark as not collected</a>
+  <% else %>
+    <a href="/items/<%= @item.id %>/collect">Mark as collected</a>
+  <% end %>
+<% end %>
+
+<% if user_signed_in? %>
+<a href="/items/<%= @item.id %>/edit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit</a>
+<% end %>

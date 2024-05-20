@@ -2,8 +2,8 @@
 
 one:
   user: one
-  collection_item: one
+  item: one
 
 two:
   user: two
-  collection_item: two
+  item: two

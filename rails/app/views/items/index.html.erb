@@ -2,16 +2,16 @@
 <div class="flex flex-row">
   <span class="basis-1/2">Items</span>
   <% if user_signed_in? %>
-  <a href="/collection_items/new"
+  <a href="/items/new"
     class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Create new collection item</a>
   <% end %>
 </div>
 <ul class="list-none">
-  <% @collection_items.each do |collection_item| %>
+  <% @items.each do |item| %>
     <li
       class="w-full border-b-2 border-neutral-100 border-opacity-100 py-4 dark:border-opacity-50">
-      <a href="/collection_items/<%= collection_item.id %>">
-        <%= collection_item.name %>
+      <a href="/items/<%= item.id %>">
+        <%= item.name %>
       </a>
     </li>
   <% end %>

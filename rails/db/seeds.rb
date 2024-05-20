@@ -8,9 +8,9 @@
 
 return if Rails.env == "production"
 
-UserCollectionItem.destroy_all
+UserItem.destroy_all
 UserCollection.destroy_all
-CollectionItem.destroy_all
+Item.destroy_all
 Collection.destroy_all
 CollectionType.destroy_all
 User.destroy_all
@@ -20,7 +20,7 @@ collections = Collection.create([
   {name: "Star Wars: Legion", collection_type: collection_types[1]},
   {name: "Catan", collection_type: collection_types[2]}
 ])
-collection_items = CollectionItem.create([{name: "Duck Hunt", collection: collections[0]}, {name: "Super Mario Bros.", collection: collections[0]}])
+items = Item.create([{name: "Duck Hunt", collection: collections[0]}, {name: "Super Mario Bros.", collection: collections[0]}])
 
 user = User.create! :name => 'John Doe', :email => 'john@doe.com', :password => 'test1234', :password_confirmation => 'test1234'
 
@@ -28,6 +28,6 @@ UserCollection.create([
   {user: user, collection: collections[0]}
 ])
 
-UserCollectionItem.create([
-  {user: user, collection_item: collection_items[0]}
+UserItem.create([
+  {user: user, item: items[0]}
 ])
