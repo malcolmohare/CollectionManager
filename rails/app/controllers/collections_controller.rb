@@ -80,6 +80,6 @@ class CollectionsController < BaseController
 
   private
     def collection_params
-      params.require(:collection).permit(:name, :collection_type_id)
+      params.require(:collection).permit(:name, :collection_type_id, :parent_id)
     end
 end

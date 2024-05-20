@@ -5,6 +5,8 @@ class Collection < ApplicationRecord
     belongs_to :collection_type
     has_many :items
     has_many :user_collections
+    belongs_to :parent, class_name: 'Collection', optional: true
+    has_many :children, class_name: 'Collection', foreign_key: 'parent_id'
 
     def self.search val
       if val

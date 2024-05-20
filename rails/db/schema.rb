@@ -23,8 +23,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_20_183012) do
     t.datetime "updated_at", null: false
     t.integer "collection_type_id"
     t.integer "creator_id"
+    t.integer "parent_id"
     t.index ["collection_type_id"], name: "index_collections_on_collection_type_id"
     t.index ["creator_id"], name: "index_collections_on_creator_id"
+    t.index ["parent_id"], name: "index_collections_on_parent_id"
   end
 
   create_table "items", force: :cascade do |t|

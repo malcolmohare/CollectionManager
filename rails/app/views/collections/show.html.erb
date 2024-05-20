@@ -18,6 +18,17 @@
     Collection Progress:  <%= current_user.user_items.select { |x| x.item.collection == @collection }.count %> of <%= @collection.items.count %>
   </div>
 <% end %>
+
+<% if @collection.children.any? %>
+<% collection_table_headers = ["Collection Name", user_signed_in? ? "Collecting State" : nil , "# Items", "Category"].compact %>
+  <h2>Child Collections</h2>
+  <%= render "table", table_headers: collection_table_headers do %>
+    <%= render partial: "collection", collection: @collection.children %>
+  <% end %>
+<% else %>
+  <p>No child collections.</p>
+<% end %>
+
 <div class="flex items-center justify-between flex-wrap">
   <div class="text-lg w-full block flex-grow lg:flex lg:items-center lg:w-auto">Collection items</div>
   <% if user_signed_in? %>
