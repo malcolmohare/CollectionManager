@@ -1,0 +1,5 @@
+<%= form_with model: @item, class: "bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" do |form| %>
+  <%= render "text_field", form: form, field_name: :name, form_obj: @item %>
+  <%= render "dropdown_field", form: form, field_name: :collection, dropdown_contents: Collection.all, form_obj: @item %>
+  <%= render "submit_button", form: form %>
+<% end %>

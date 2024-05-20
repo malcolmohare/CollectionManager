@@ -71,7 +71,7 @@ class CollectionsControllerTest < ActionDispatch::IntegrationTest
   
     test "should process_bulk_create_items" do
       collection = collections(:one)
-      assert_difference('CollectionItem.count', 3) do
+      assert_difference('Item.count', 3) do
         post process_bulk_create_items_url(collection), params: { items: 'Item 1, Item 2, Item 3' }
       end
   

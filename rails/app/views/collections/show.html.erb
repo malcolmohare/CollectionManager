@@ -15,7 +15,7 @@
   <% end %>
 
   <div>
-    Collection Progress:  <%= current_user.user_collection_items.select { |x| x.collection_item.collection == @collection }.count %> of <%= @collection.items.count %>
+    Collection Progress:  <%= current_user.user_items.select { |x| x.item.collection == @collection }.count %> of <%= @collection.items.count %>
   </div>
 <% end %>
 <div class="flex items-center justify-between flex-wrap">
@@ -23,7 +23,7 @@
   <% if user_signed_in? %>
     <%# only allow editing if user is the collection owner %>
     <% if @collection.creator == current_user %>
-      <a href="/collection_items/new?collection_id=<%= @collection.id %>"
+      <a href="/items/new?collection_id=<%= @collection.id %>"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add Item</a>
       <a href="/collections/<%= @collection.id %>/bulk_create_items"
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add Items</a>
@@ -37,5 +37,5 @@
 <% table_headers = ["Item", user_signed_in? ? "Collecting State" : nil].compact %>
 
 <%= render "table", table_headers: table_headers do %>
-  <%= render partial: "collection_item", collection: @collection.items.sort_by(&:name) %>
+  <%= render partial: "item", collection: @collection.items.sort_by(&:name) %>
 <% end %>
