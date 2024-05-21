@@ -31,6 +31,11 @@ items = Item.create!([
   {name: "Super Mario Bros.", collection: collections[0], creator: user},
 ])
 
+items.each do |item|
+  item.collections << item.collection
+  item.save!
+end
+
 UserCollection.create([
   {user: user, collection: collections[0]}
 ])

@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   root "home_page#index"
   
-  resources :collections
+  resources :collections do
+    post 'add_item', on: :member
+  end
   resources :collection_types
   resources :items
 
