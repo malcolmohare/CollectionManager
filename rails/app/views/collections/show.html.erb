@@ -53,7 +53,7 @@
     <% end %>
     </div>
 
-    <% if @items.any? %>
+    <% if @items && @items.any? %>
       <% search_table_headers = ["Item", "Action"].compact %>
       <%= render "table", table_headers: search_table_headers do %>
         <% @items.each do |item| %>
