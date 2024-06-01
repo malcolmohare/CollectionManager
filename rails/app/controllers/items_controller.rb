@@ -18,6 +18,7 @@ class ItemsController < BaseController
   def create
     @item = Item.new(item_params)
     @item.creator = current_user
+    @item.collections << Collection.find(item_params[:collection_id])
 
     if @item.save
       redirect_to @item.collection

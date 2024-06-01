@@ -6,6 +6,13 @@
   </div>
 <% end %>
 
+<% if user_signed_in? and @collection.creator == current_user %>
+  <div class="flex justify-end">
+    <a href="/collections/<%= @collection.id %>/edit"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit Collection</a>
+  </div>
+<% end %>
+
 <% if user_signed_in? %>
   <% if current_user.user_collections.any? { |x| x.collection_id == @collection.id } %>
     You are collecting this collection.
@@ -20,7 +27,7 @@
 <% end %>
 
 <% if @collection.children.any? %>
-<% collection_table_headers = ["Collection Name", user_signed_in? ? "Collecting State" : nil , "# Items", "Category"].compact %>
+  <% collection_table_headers = ["Collection Name", user_signed_in? ? "Collecting State" : nil , "# Items", "Category"].compact %>
   <h2>Child Collections</h2>
   <%= render "table", table_headers: collection_table_headers do %>
     <%= render partial: "collection", collection: @collection.children %>
@@ -29,24 +36,45 @@
   <p>No child collections.</p>
 <% end %>
 
-<div class="flex items-center justify-between flex-wrap">
-  <div class="text-lg w-full block flex-grow lg:flex lg:items-center lg:w-auto">Collection items</div>
-  <% if user_signed_in? %>
-    <%# only allow editing if user is the collection owner %>
-    <% if @collection.creator == current_user %>
-      <a href="/items/new?collection_id=<%= @collection.id %>"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add Item</a>
-      <a href="/collections/<%= @collection.id %>/bulk_create_items"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add Items</a>
-      <a href="/collections/<%= @collection.id %>/edit"
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Edit Collection</a>
+<%# only allow editing if user is the collection owner %>
+<% if user_signed_in? and @collection.creator == current_user %>
+  <p>You can add items either by searching for existing items and adding them to this collection, or by creating new items.</p>
+  <div class="flex items-center justify-end flex-wrap my-4">
+    <a href="/items/new?collection_id=<%= @collection.id %>"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add New Item</a>
+    <a href="/collections/<%= @collection.id %>/bulk_create_items"
+      class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4">Add New Items</a>
+  </div>
+  <div>
+    <div>
+    <%= form_with url: collection_path(@collection), method: :get do |form| %>
+      <%= form.text_field :search, placeholder: "Search items" %>
+      <%= form.submit "Search" %>
     <% end %>
-  <% end %>
-</div>
+    </div>
+
+    <% if @items && @items.any? %>
+      <% search_table_headers = ["Item", "Action"].compact %>
+      <%= render "table", table_headers: search_table_headers do %>
+        <% @items.each do |item| %>
+          <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+            <td class="px-6 py-4">
+              <a href="/items/<%= item.id %>"><%= item.name %></a>
+            </td>
+            <td class="px-6 py-4">
+              <%= button_to 'Add to collection', add_item_collection_path(@collection, item_id: item.id), method: :post, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-4" %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>
+
 
 
 <% table_headers = ["Item", user_signed_in? ? "Collecting State" : nil].compact %>
-
+<div class="text-lg w-full block flex-grow lg:flex lg:items-center lg:w-auto">Collection items</div>
 <%= render "table", table_headers: table_headers do %>
   <%= render partial: "item", collection: @collection.items.sort_by(&:name) %>
 <% end %>

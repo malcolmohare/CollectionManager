@@ -11,6 +11,22 @@ class CollectionsController < BaseController
 
   def show
     @collection = Collection.find(params[:id])
+    if params[:search]
+      @items = Item.joins(:collections)
+                   .where('items.name LIKE ?', "%#{params[:search]}%")
+                   .where(collections: { collection_type: @collection.collection_type })
+                   .where.not(id: @collection.items.pluck(:id))
+                   .distinct
+    else
+      @items = []
+    end
+  end
+
+  def add_item
+    @collection = Collection.find(params[:id])
+    @item = Item.find(params[:item_id])
+    @collection.items << @item unless @collection.items.include?(@item)
+    redirect_to @collection
   end
 
   def new
@@ -73,7 +89,9 @@ class CollectionsController < BaseController
     end
     items = params[:items]
     items.split(",").map{ |x| x.strip }.each do |item_name|
-      Item.new(name: item_name, collection: @collection, creator: current_user).save
+      item = Item.new(name: item_name, creator: current_user, collection: @collection)
+      item.collections << @collection
+      item.save!
     end
     render :show
   end
